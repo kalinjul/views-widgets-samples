@@ -21,6 +21,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -51,6 +52,18 @@ class FlowersListActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.adapter = concatAdapter
+        recyclerView.setOnLongClickListener {
+            println("On Long Click") // does not work
+            true
+        }
+        recyclerView.setOnClickListener {
+            println("On Click") // does not work
+        }
+
+        recyclerView.setOnTouchListener { v, event ->
+            println("On touch $event") // works, but is low-level
+            true
+        }
 
         flowersListViewModel.flowersLiveData.observe(this, {
             it?.let {
