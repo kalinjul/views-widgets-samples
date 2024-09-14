@@ -54,7 +54,7 @@ class FlowersListActivity : AppCompatActivity() {
 
         flowersListViewModel.flowersLiveData.observe(this, {
             it?.let {
-                flowersAdapter.submitList(it as MutableList<Flower>)
+                flowersAdapter.submitList(it)
                 headerAdapter.updateFlowerCount(it.size)
             }
         })

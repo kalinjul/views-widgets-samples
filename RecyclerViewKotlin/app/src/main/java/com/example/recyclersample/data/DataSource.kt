@@ -19,17 +19,17 @@ package com.example.recyclersample.data
 import android.content.res.Resources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 
 /* Handles operations on flowersLiveData and holds details about it. */
 class DataSource(resources: Resources) {
     private val initialFlowerList = flowerList(resources)
-    private val flowersLiveData = MutableLiveData(initialFlowerList)
-
+    private val flowersLiveData = MutableLiveData(mutableListOf<Flower>())
     /* Adds flower to liveData and posts value. */
     fun addFlower(flower: Flower) {
         val currentList = flowersLiveData.value
         if (currentList == null) {
-            flowersLiveData.postValue(listOf(flower))
+            flowersLiveData.postValue(mutableListOf(flower))
         } else {
             val updatedList = currentList.toMutableList()
             updatedList.add(0, flower)
@@ -56,7 +56,7 @@ class DataSource(resources: Resources) {
     }
 
     fun getFlowerList(): LiveData<List<Flower>> {
-        return flowersLiveData
+        return flowersLiveData.map { it.toList() }
     }
 
     /* Returns a random flower asset for flowers that are added. */
